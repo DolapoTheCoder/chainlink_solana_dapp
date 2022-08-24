@@ -20,3 +20,17 @@ pub mod chainlink_solana_dapp {
     }
 }
 
+#[derive(Accounts)]
+pub struct Execute<'info> {
+    #[account(init, payer=user, space=100)]
+    let result_account: Account<'info, ResultAccount>,
+    #[account(mut)]
+    pub user: Signer<'info>,
+    pub system_program: Program<'info, System>,
+    pub chainlink_program: AccountInfo<'info>,
+    pub chainlink_feed: AccountInfo<'info>,
+}
+
+pub struct ResultAccount<'info> {
+
+}
