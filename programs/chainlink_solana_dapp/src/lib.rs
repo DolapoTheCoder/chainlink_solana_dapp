@@ -31,6 +31,7 @@ pub struct Execute<'info> {
     pub chainlink_feed: AccountInfo<'info>,
 }
 
-pub struct ResultAccount<'info> {
-
+#[account]
+pub struct ResultAccount {
+    pub valud:i128
 }
