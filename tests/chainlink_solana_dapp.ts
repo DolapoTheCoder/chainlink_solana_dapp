@@ -4,24 +4,26 @@ const CHAINLINK_FEED = "HgTtcbcmp5BeThax5AU8vg4VwK79qAvAKKFMs8txMLW6"
 const CHAINLINK_PROGRAM_ID = "HEvSKofvBgfaexv23kMabbYqxasxU3mQ4ibBMEmJWHny"
 
 describe("chainlink_solana_dapp", () => {
-  const provider = anchor.AnchorProvider.env()
-  anchor.setProvider(provider)
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
   const program = anchor.workspace.ChainlinkSolanaDapp;
 
 
   it('Queries SOL/USD Price feed', async () => {
-    const resultAccount = anchor.web3.Keypair.generate()
+    const resultAccount = anchor.web3.Keypair.generate();
     await program.rpc.execute({
       accounts: {
         resultAccount: resultAccount.publicKey,
         user: provider.wallet.publicKey,
         systemProgram: anchor.web3.SystemProgram.programId,
         chainlinkFeed: CHAINLINK_FEED,
-        chainLinkProgram: CHAINLINK_PROGRAM_ID
+        chainlinkProgram: CHAINLINK_PROGRAM_ID,
       },
       signers: [resultAccount],
     });
-    const latestPrice = await program.accounts.resultAccount.fetch(resultAccount.publicKey)
-    console.log('Price is: '+ latestPrice.value/100000000);
+    const latestPrice = await program.account.resultAccount.fetch(
+      resultAccount.publicKey
+    );
+    console.log("Price is: " + latestPrice.value / 100000000);
   });
 });
